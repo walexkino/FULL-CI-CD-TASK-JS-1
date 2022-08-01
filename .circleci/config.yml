@@ -36,11 +36,19 @@ jobs: # now set the jobs stages
           keys:
             - "npm-packages"
       - run: npm install --save-dev jest@28.1.3
-      # - run: npm update minimist --depth 3
-      # - run: npm update path-parse --depth 3
-      # - run: npm update lodash --depth 14
-      # - run: npm update ansi-regex --depth 4 
-      - run: npm audit
+      - run: npm install --save-dev webpack-hot-middleware@2.25.1
+      - run: npm install --save-dev cssnano@5.1.12
+      - run: npm update path-parse --depth 3
+      - run: npm update watchpack --depth
+      - run: npm update glob-parent --depth 3
+      - run: npm update mkdirp --depth 12
+      - run: npm update minimist --depth 13
+      - run: npm update cssnano-preset-default --depth 2
+      - run: npm update eazy-logger --depth 2
+      - run: npm update path-parse --depth 12
+      - run: npm update socket.io-parser --depth 4
+      - run: npm update postcss --depth 5
+      - run: npm update browserslist --depth 5
       # - run: npm audit fix
       # - lets go
 
