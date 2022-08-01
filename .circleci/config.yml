@@ -1,0 +1,57 @@
+version: 2.1
+
+# its a NODE JS application 
+jobs: # now set the jobs stages
+
+  build: #build jobs
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: npm i #instaling the dependencies
+      - save_cache:
+          key: "npm-packages"
+          paths:
+            - /src/node_modules
+
+      - run: npm run lint #Linting is the process of running a program that analyses code for potential errors. 
+
+  test: #test jobs
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - "npm-packages"
+      - run: npm i
+      - run: npm run test
+
+  analyze: #analyse jobs
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - "npm-packages"
+      # - run: npm install --save-dev jest@28.1.3
+      # - run: npm update minimist --depth 3
+      # - run: npm update path-parse --depth 3
+      # - run: npm update lodash --depth 14
+      # - run: npm update ansi-regex --depth 4 
+      - run: npm audit
+      # - run: npm audit fix
+      # - lets go
+
+
+workflows:
+  my_workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - analyze:
+          requires:
+            - test
