@@ -52,6 +52,15 @@ jobs: # now set the jobs stages
       # - run: npm audit fix
       # - lets go
 
+  ec2Instance: #analyse jobs
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: 
+          name: "it echoes the current IP of the ec2Instance "
+          command: |
+            echo "The instance is " aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
+
 
 workflows:
   my_workflow:
@@ -63,3 +72,4 @@ workflows:
       - analyze:
           requires:
             - test
+      - ec2Instance
