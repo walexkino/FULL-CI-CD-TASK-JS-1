@@ -52,15 +52,16 @@ jobs: # now set the jobs stages
       # - run: npm audit fix
       # - lets go
 
-  ec2Instance: #analyse jobs
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - run: unzip awscliv2.zip
-      - run: sudo ./aws/install
-      - run: ./aws/install -i /usr/local/aws-cli -b /usr/local/bin --update
-      - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
+  # ec2Instance: #analyse jobs
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  #     - run: unzip awscliv2.zip
+  #     - run: sudo ./aws/install
+  #     - run: ./aws/install -i /usr/local/aws-cli -b /usr/local/bin --update
+  #     - run: aws configure
+  #     - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
 
 
 workflows:
@@ -70,8 +71,8 @@ workflows:
       - test:
           requires:
             - build
-      # - analyze:
-      #     requires:
-      #       - test
-      - ec2Instance
+      - analyze:
+          requires:
+            - test
+      # - ec2Instance
       
