@@ -56,10 +56,7 @@ jobs: # now set the jobs stages
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: 
-          name: "it echoes the current IP of the ec2Instance "
-          command: |
-            echo "The instance is " aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
+      - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
 
 
 workflows:
@@ -69,7 +66,8 @@ workflows:
       - test:
           requires:
             - build
-      - analyze:
-          requires:
-            - test
+      # - analyze:
+      #     requires:
+      #       - test
       - ec2Instance
+      
