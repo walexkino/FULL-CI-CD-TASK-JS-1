@@ -59,7 +59,7 @@ jobs: # now set the jobs stages
       - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       - run: unzip awscliv2.zip
       - run: sudo ./aws/install
-      - run: ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+      - run: ./aws/install -i /usr/local/aws-cli -b /usr/local/bin --update
       - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
 
 
